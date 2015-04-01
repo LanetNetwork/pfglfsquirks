@@ -23,6 +23,7 @@
 typedef void (*dentry_handler_t)(glfs_t*, const char*, struct dirent*, struct stat*, void*, unsigned int);
 typedef int (*dentry_comparator_t)(const char*, struct dirent*, struct stat*, unsigned int);
 
+int glfs_mkdir_safe(glfs_t* _fs, const char* _path, mode_t _mode);
 void walk_dir_generic(glfs_t* _fs, const char* _entry_point, dentry_handler_t _handler, dentry_comparator_t _comparator, void* _data, unsigned int _level) __attribute__((nonnull(1, 2, 3)));
 
 #endif /* __PFGFQ_H__ */

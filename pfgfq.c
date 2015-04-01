@@ -20,8 +20,24 @@
 #include <glusterfs/api/glfs.h>
 #include <pfcq.h>
 #include <pfgfq.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <string.h>
+
+static pthread_mutex_t glfs_mkdir_safe_lock = PTHREAD_MUTEX_INITIALIZER;
+
+int glfs_mkdir_safe(glfs_t* _fs, const char* _path, mode_t _mode)
+{
+	int ret = 0;
+
+	if (unlikely(pthread_mutex_lock(&glfs_mkdir_safe_lock)))
+		panic("pthread_mutex_lock");
+	ret = glfs_mkdir(_fs, _path, _mode);
+	if (unlikely(pthread_mutex_unlock(&glfs_mkdir_safe_lock)))
+		panic("pthread_mutex_unlock");
+
+	return ret;
+}
 
 void walk_dir_generic(glfs_t* _fs, const char* _entry_point, dentry_handler_t _handler, dentry_comparator_t _comparator, void* _data, unsigned int _level)
 {
