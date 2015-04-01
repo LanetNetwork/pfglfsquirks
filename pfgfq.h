@@ -17,13 +17,13 @@
 
 #pragma once
 
-#ifndef __PFGLFQ_H__
-#define __PFGLFQ_H__
+#ifndef __PFGFQ_H__
+#define __PFGFQ_H__
 
 typedef void (*dentry_handler_t)(glfs_t*, const char*, struct dirent*, struct stat*, void*, unsigned int);
 typedef int (*dentry_comparator_t)(const char*, struct dirent*, struct stat*, unsigned int);
 
 void walk_dir_generic(glfs_t* _fs, const char* _entry_point, dentry_handler_t _handler, dentry_comparator_t _comparator, void* _data, unsigned int _level) __attribute__((nonnull(1, 2, 3)));
 
-#endif /* __PFGLFQ_H__ */
+#endif /* __PFGFQ_H__ */
 
