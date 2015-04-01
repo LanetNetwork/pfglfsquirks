@@ -12,7 +12,7 @@ endif (CMAKE_BUILD_TYPE MATCHES Debug)
 
 include(FindPkgConfig)
 if (PKG_CONFIG_FOUND)
-		pkg_check_modules(GLUSTERFS-API glusterfs-api)
+	pkg_check_modules(GLUSTERFS-API glusterfs-api)
 	if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
 		pkg_check_modules(LIBTCMALLOC_MINIMAL libtcmalloc_minimal)
 		if(LIBTCMALLOC_MINIMAL_FOUND EQUAL 1)
