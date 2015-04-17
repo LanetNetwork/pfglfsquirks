@@ -29,10 +29,15 @@ static pthread_mutex_t glfs_mkdir_safe_lock = PTHREAD_MUTEX_INITIALIZER;
 int glfs_mkdir_safe(glfs_t* _fs, const char* _path, mode_t _mode)
 {
 	int ret = 0;
+	glfs_fd_t* fh = NULL;
 
 	if (unlikely(pthread_mutex_lock(&glfs_mkdir_safe_lock)))
 		panic("pthread_mutex_lock");
-	ret = glfs_mkdir(_fs, _path, _mode);
+	fh = glfs_opendir(_fs, _path);
+	if (unlikely(!fh))
+		ret = glfs_mkdir(_fs, _path, _mode);
+	else
+		glfs_closedir(fh);
 	if (unlikely(pthread_mutex_unlock(&glfs_mkdir_safe_lock)))
 		panic("pthread_mutex_unlock");
 
