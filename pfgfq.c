@@ -44,7 +44,7 @@ int glfs_mkdir_safe(glfs_t* _fs, const char* _path, mode_t _mode)
 	return ret;
 }
 
-void walk_dir_generic(glfs_t* _fs, const char* _entry_point, dentry_handler_t _handler, dentry_comparator_t _comparator, void* _data, unsigned int _level)
+void walk_dir_generic(glfs_t* _fs, const char* _entry_point, glfs_dentry_handler_t _handler, glfs_dentry_comparator_t _comparator, void* _data, unsigned int _level)
 {
 	glfs_fd_t* fd = NULL;
 	struct dirent* entry = NULL;
